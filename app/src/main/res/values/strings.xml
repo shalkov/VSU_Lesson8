@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">VSU_Lesson8</string>
+    <string name="open_second_activity_text">Открыть вторую Activity</string>
+    <string name="get_universe_viewmodel_text">Получить значение из ViewModel</string>
+</resources>
