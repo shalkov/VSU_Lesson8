@@ -58,11 +58,14 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
 
-    // Kotlin
+    // Activity ktx
     implementation("androidx.activity:activity-ktx:$activity_version")
-}
 
-// Allow references to generated code
-kapt {
-    correctErrorTypes = true
+    //Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava3:2.11.0")
+    //Gson
+    implementation("com.google.code.gson:gson:2.10.1")
+
 }

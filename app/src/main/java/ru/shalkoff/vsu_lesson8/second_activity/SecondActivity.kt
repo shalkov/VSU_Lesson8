@@ -1,7 +1,6 @@
 package ru.shalkoff.vsu_lesson8.second_activity
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -9,20 +8,13 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.shalkoff.vsu_lesson8.R
-import ru.shalkoff.vsu_lesson8.dagger2.DaggerUniverse
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SecondActivity : AppCompatActivity() {
-
-    @Inject
-    lateinit var daggerUniverse: DaggerUniverse
 
     private val viewModel: SecondViewModel by viewModels()
 
@@ -37,9 +29,6 @@ class SecondActivity : AppCompatActivity() {
         }
         observeUpdateUiState()
         initListeners()
-
-        Log.d("SecondActivity", daggerUniverse.hashCode().toString())
-
     }
 
     /**
@@ -52,12 +41,17 @@ class SecondActivity : AppCompatActivity() {
                     is SecondUiState.InitScreen -> {
                         //Do nothing
                     }
+
+                    is SecondUiState.ShowAllSchedule -> {
+                        showToast(it.routesResponse.routes[0].routeNumber)
+                    }
+
+                    is SecondUiState.ShowStartGameText -> {
+                        showToast(it.text)
+                    }
+
                     is SecondUiState.ShowCurrentUniverse -> {
-                        Toast.makeText(
-                            this@SecondActivity,
-                            "Хешкод: ${it.currentDaggerUniverse.hashCode()}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        showToast("Хешкод: ${it.currentDaggerUniverse.hashCode()}")
                     }
                 }
             }
@@ -68,5 +62,16 @@ class SecondActivity : AppCompatActivity() {
         findViewById<Button>(R.id.get_current_universe_btn).setOnClickListener {
             viewModel.updateCurrentUniverse()
         }
+        findViewById<Button>(R.id.get_all_schedule_btn).setOnClickListener {
+            viewModel.getAllSchedule()
+        }
+    }
+
+    private fun showToast(text: String) {
+        Toast.makeText(
+            this,
+            text,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }
