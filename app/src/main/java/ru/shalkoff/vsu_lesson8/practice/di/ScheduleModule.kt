@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
 import ru.shalkoff.vsu_lesson8.practice.ScheduleApiService
 import ru.shalkoff.vsu_lesson8.practice.ScheduleRepository
 import javax.inject.Singleton
@@ -14,8 +15,10 @@ object ScheduleModule {
 
     @Provides
     @Singleton
-    fun provideScheduleApiService(): ScheduleApiService {
-        return RetrofitModule.client.create(
+    fun provideScheduleApiService(
+        retrofit: Retrofit
+    ): ScheduleApiService {
+        return retrofit.create(
             ScheduleApiService::class.java
         )
     }
